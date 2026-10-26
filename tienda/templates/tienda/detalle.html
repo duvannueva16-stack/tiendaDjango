@@ -1,0 +1,30 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+
+{% block contenido %}
+<div class="row">
+    <div class="col-md-6">
+        {% if producto.imagen %}
+        <img src="{{ producto.imagen.url }}" class="img-fluid rounded" alt="{{ producto.nombre }}">
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h1>{{ producto.nombre }}</h1>
+        <p class="text-muted">Categoria: {{ producto.categoria.nombre }}</p>
+        <h3>${{ producto.precio|floatformat:0 }}</h3>
+        <p>{{ producto.descripcion }}</p>
+        <p>
+            Tallas:
+            {% for t in producto.tallas.all %}
+            <span class="badge bg-dark">{{ t.nombre }}</span>
+            {% empty %}
+            No disponible
+            {% endfor %}
+        </p>
+        <p>Stock: {{ producto.stock }}</p>
+        <a href="https://wa.me/573001234567?text=Hola%20me%20interesa%20{{ producto.nombre|urlencode }}"
+           target="_blank" class="btn btn-success">Comprar por WhatsApp</a>
+        <a href="{% url 'inicio' %}" class="btn btn-secondary">Volver</a>
+    </div>
+</div>
+{% endblock %}
